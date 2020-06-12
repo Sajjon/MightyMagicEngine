@@ -3,5 +3,5 @@ import XCTest
 import MightyMagicEngineTests
 
 var tests = [XCTestCaseEntry]()
-tests += MightyMagicEngineTests.allTests()
+tests += BattleSpellCastingTests.allTests()
 XCTMain(tests)
