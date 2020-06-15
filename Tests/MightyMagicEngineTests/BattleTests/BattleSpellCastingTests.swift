@@ -38,8 +38,8 @@ final class BattleSpellCastingTests: XCTestCase {
         
         XCTAssertThrowsSpecificError(
             try battle.hero(solmyr, castsSpell: .dimensionDoor),
-            expectedError: SpellCastingFailure.cannotCastAdventureMapSpellInCombat,
-            "Dimenson door is an adventure map spell, that cannot be cast in combat"
+            expectedError: SpellCastingFailure.cannotCastAdventureMapSpellInBattle,
+            "Dimenson door is an adventure map spell, that cannot be cast in battle"
         )
     }
 

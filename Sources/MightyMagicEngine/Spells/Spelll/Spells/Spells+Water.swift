@@ -22,7 +22,7 @@ public extension Spell {
             name: .bless,
             schoolOfMagic: .water,
             level: .one,
-            context: .combat(target:
+            context: .battle(target:
                 .dependingOnSkillLevel(
                     basic: .allied,
                     advanced: .allied,
@@ -44,7 +44,7 @@ public extension Spell {
             name: .cure,
             schoolOfMagic: .water,
             level: .one,
-            context: .combat(target:
+            context: .battle(target:
                 .dependingOnSkillLevel(
                     basic: .allied,
                     advanced: .allied,
@@ -66,7 +66,7 @@ public extension Spell {
             name: .dispell,
             schoolOfMagic: .water,
             level: .one,
-            context: .combat(
+            context: .battle(
                 target: .dependingOnSkillLevel(
                     basic: .allied,
                     advanced: .alliedOrEnemy,
@@ -88,7 +88,7 @@ public extension Spell {
                name: .protectionFromWater,
                schoolOfMagic: .water,
                level: .one,
-                   context: .combat(target:
+                   context: .battle(target:
                            .dependingOnSkillLevel(
                                basic: .allied,
                                advanced: .allied,
@@ -127,7 +127,7 @@ public extension Spell {
             name: .iceBolt,
             schoolOfMagic: .water,
             level: .two,
-            context: .combat(target: .always(.enemy)),
+            context: .battle(target: .always(.enemy)),
             duration: .instant,
             generalDescription: "Shoots an ice bolt at target enemy creature stack.",
             basicEffectDescription: "Target enemy troop receives (10 + (power x 20)) damage.",
@@ -143,7 +143,7 @@ public extension Spell {
             name: .removeObstacle,
             schoolOfMagic: .water,
             level: .two,
-            context: .combat(target: .always(.battlefieldTile)),
+            context: .battle(target: .always(.battlefieldTile)),
             duration: .instant,
             generalDescription: "Remove obstacle of choice from the battlefield (including those created by magic), except integrated objects such as Castle Walls, Cliffs and Rifts.",
             basicEffectDescription: "Removes one, non-magic obstacle from the battlefield. Integrated obstacles, such as cliffs are not affected.",
@@ -177,7 +177,7 @@ public extension Spell {
                name: .weakness,
                schoolOfMagic: .water,
                level: .two,
-               context: .combat(
+               context: .battle(
                 target: .dependingOnSkillLevel(
                     basic: .enemy,
                     advanced: .enemy,
@@ -199,7 +199,7 @@ public extension Spell {
             name: .forgetfulness,
             schoolOfMagic: .water,
             level: .three,
-            context: .combat(
+            context: .battle(
                 target: .dependingOnSkillLevel(
                     basic: .enemy,
                     advanced: .enemy,
@@ -221,7 +221,7 @@ public extension Spell {
             name: .frostRing,
             schoolOfMagic: .water,
             level: .three,
-            context: .combat(target: .always(.multiTileHittingEnemies)),
+            context: .battle(target: .always(.multiTileHittingEnemies)),
             duration: .instant,
             generalDescription: "Causes creatures in the hexes surrounding target hex receive damage.",
             basicEffectDescription: "Troops in hexes surrounding target hex receive (15 + (power x 10)) in damage. Target hex is unaffected.",
@@ -237,7 +237,7 @@ public extension Spell {
             name: .mirth,
             schoolOfMagic: .water,
             level: .three,
-            context: .combat(target: .dependingOnSkillLevel(basic: .allied, advanced: .allied, expert: .none)),
+            context: .battle(target: .dependingOnSkillLevel(basic: .allied, advanced: .allied, expert: .none)),
             duration: .oneRoundPerHeroPower,
             generalDescription: "Increases morale of target allied stack.",
             basicEffectDescription: "Morale of target allied troop is increased by 1.",
@@ -253,7 +253,7 @@ public extension Spell {
             name: .teleport,
             schoolOfMagic: .water,
             level: .three,
-            context: .combat(target: .always(.allied)),
+            context: .battle(target: .always(.allied)),
             duration: .instant,
             generalDescription: "Move target allied troop to another unoccupied tile on the battlefield.",
             basicEffectDescription: "Target allied troop instantly moves to an unoccupied target hex. Troop cannot teleport over walls or moats.",

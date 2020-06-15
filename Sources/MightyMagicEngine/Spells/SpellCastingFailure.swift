@@ -24,11 +24,11 @@ public enum SpellCastingFailure: Swift.Error, Equatable {
     /// N.B. this error should be guarded against using proper UI.
     case notInSpellBook
     
-    case cannotCastAdventureMapSpellInCombat
+    case cannotCastAdventureMapSpellInBattle
     
     case combatSpellRequiresTargetButNoneWasGiven
     
-    case cannotCastCombatSpellOnAdventureMap
+    case cannotCastBattleSpellOnAdventureMap
     
     /// You cannot cast the spell on this target creature because it has permanent
     /// resistens to either this particular effect/spell or to spell of level.

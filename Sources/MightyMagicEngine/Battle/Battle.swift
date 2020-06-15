@@ -33,8 +33,8 @@ public extension Battle {
         
         let spell: Spell = Spell[spellName]
         
-        guard spell.effect.context.isCombat else {
-            throw SpellCastingFailure.cannotCastAdventureMapSpellInCombat
+        guard spell.effect.context.isBattle else {
+            throw SpellCastingFailure.cannotCastAdventureMapSpellInBattle
         }
   
         try hero.cast(spell: spellName, target: target)

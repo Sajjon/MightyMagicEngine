@@ -71,7 +71,7 @@ public extension Spell {
         // MARK: Level 3
         case animateDead
         case antiMagic
-        case earthQuake
+        case earthquake
         case forceField
         case protectionFromEarth
         
