@@ -478,66 +478,129 @@ public extension Spell {
         )
     )
     
+    /// Reduces the morale of target enemy creature stack
+    ///
+    /// Sorrow is one of the mind spells, which makes some creatures immune to it.
+    ///
+    /// # Immunity
+    /// Units immune to its effects:
+    /// - Gold Dragon
+    /// - Black Dragon
+    /// - All Undead creatures
+    /// - All Elementals
+    /// - Giants and Titans
+    /// Additionally, artifact  `Badge of Courage` renders units ummune to Sorrow (except for in HotA).
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Sorrow
+    ///
     static let sorrow = Self.init(
-           cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
+        cost: .init(normal: 16, reduced: 12),
 
            effect: .init(
                name: .sorrow,
                schoolOfMagic: .earth,
-               level: <#T##Level#>,
-               context: ,
-               generalDescription: <#T##String#>,
-               basicEffectDescription: <#T##String#>,
-               advancedEffectDescription: <#T##String#>,
-               expertEffectDescription: <#T##String#>
+            level: .four,
+            context: .battle(.massNegative),
+               generalDescription: "Reduces the morale of target enemy creature stack",
+               basicEffectDescription: "Target, enemy troop's morale rating is reduced by 1.",
+               advancedEffectDescription: "Target, enemy troop's morale rating is reduced by 2.",
+               expertEffectDescription: "All enemy troops' morale rating is reduced by 2."
            )
        )
     
+    /// Teleports the casting hero to an allied town
+    ///
+    /// At a `basic` level, it teleports the casting hero to the nearest allied town. However, if the hero has Advanced
+    /// or `Expert` Earth Magic, Town Portal teleports the hero to any allied town, at the players choice.
+    /// The hero cannot teleport to town which has a visiting hero.
+    ///
+    /// It is possible, that in some versions of the game, that hero is unable to use Town Portal spell in underground
+    /// if all towns are in the upper world, and if the hero has no Earth Magic at least on the Advanced level.
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Town_Portal
+    ///
     static let townPortal = Self.init(
-           cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
+           cost: .init(normal: 16, reduced: 12),
 
            effect: .init(
                name: .townPortal,
                schoolOfMagic: .earth,
-               level: <#T##Level#>,
-               context: ,
-               generalDescription: <#T##String#>,
-               basicEffectDescription: <#T##String#>,
-               advancedEffectDescription: <#T##String#>,
-               expertEffectDescription: <#T##String#>
+            level: .four,
+            context: .adventureMap(selection: .alliedTown, duration: .instant),
+               generalDescription: "Teleports the casting hero to an allied town",
+               basicEffectDescription: "Adventure Map Teleport, casting hero is teleported to the nearest allied town. 300 movement points are expended when the spell is cast.",
+               advancedEffectDescription: "Adventure Map Teleport, casting hero may teleport to any allied town with no visiting hero. 300 movement points are expended when the spell is cast.",
+               expertEffectDescription: "Adventure Map Teleport, any allied unoccupied town, deducted movement points are 200 points."
            )
        )
     
     // MARK: Level 5
-    static let implosion = Self.init(
-            cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
-
-            effect: .init(
-                name: .implosion,
-                schoolOfMagic: .earth,
-                level: <#T##Level#>,
-                context: <#T##Context#>,
-                duration: <#T##Duration#>,
-                generalDescription: <#T##String#>,
-                basicEffectDescription: <#T##String#>,
-                advancedEffectDescription: <#T##String#>,
-                expertEffectDescription: <#T##String#>
-            )
-        )
     
-    static let summonEarthElemental = Self.init(
-            cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
-
-            effect: .init(
-                name: .summonEarthElemental,
-                schoolOfMagic: .earth,
-                level: <#T##Level#>,
-                context: <#T##Context#>,
-                duration: <#T##Duration#>,
-                generalDescription: <#T##String#>,
-                basicEffectDescription: <#T##String#>,
-                advancedEffectDescription: <#T##String#>,
-                expertEffectDescription: <#T##String#>
-            )
+    /// Inflicts massive damage to a single creature stack
+    ///
+    /// From the direct damage spells with a damage dealing capability of 300 + (power × 75), it is the most destructive
+    /// spell for a single creature stack. From the spells that can cause collateral damage, Armageddon is the most
+    /// destructive.
+    ///
+    /// Implosion also has the highest slope value of 75, which means that for every point power increases Implosion
+    /// does 75 points more damage. In comparison, Armageddon has 50, Chain Lightning has 40 and
+    /// Magic Arrow has 10.
+    ///
+    /// The highest possible damage for Implosion casted by a player is 22711 points of damage. This requires
+    /// Expert Earth Magic (or Rockland, or Magic plains), Expert Sorcery, Sorcery as hero specialty
+    /// (gives 5% bonus to Sorcery per level), maximum Power (99), maximum hero level (108) and the artifact
+    /// "Orb of Silt". 14986 (c. 66%) points are the bonus from Sorcery skill. Therefore this is the highest possible
+    /// damage to deal to one unit by one spell by a player. It is, however, possible for Faerie Dragon to cast
+    /// spells of theoretically infinite strength. For highest possible damage to deal to multiple units at once by
+    /// one spell, see Armageddon.
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Implosion
+    ///
+    static let implosion = Self.init(
+        cost: .init(normal: 30, reduced: 25),
+        
+        effect: .init(
+            name: .implosion,
+            schoolOfMagic: .earth,
+            level: .five,
+            context: .battle(.damageInflicting),
+            generalDescription: "Inflicts massive damage to a single creature stack",
+            basicEffectDescription: "Target, enemy troop receives (100 + (power × 75)) damage.",
+            advancedEffectDescription: "Target, enemy troop receives (200 + (power × 75)) damage.",
+            expertEffectDescription: "Target, enemy troop receives (300 + (power × 75)) damage."
         )
+    )
+    
+    /// Summons Earth Elementals to fight for you in your army.
+    ///
+    /// Only one type of elementals may be summoned each combat.
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Summon_Earth_Elemental
+    ///
+    static let summonEarthElemental = Self.init(
+        cost: .init(normal: 25, reduced: 20),
+        
+        effect: .init(
+            name: .summonEarthElemental,
+            schoolOfMagic: .earth,
+            level: .five,
+            context: .battle(selection: .target(.always(.none)), duration: .untilEndOfBattle),
+            generalDescription: "Summons Earth Elementals to fight for you in your army.",
+            basicEffectDescription: "A troop containing (power x 2) earth elementals appears on the side of the casting player.",
+            advancedEffectDescription: "Same as basic effect, except that (power x 3) earth elementals are summoned.",
+            expertEffectDescription: "Same as basic effect, except that (power x 4) earth elementals are summoned."
+        )
+    )
 }

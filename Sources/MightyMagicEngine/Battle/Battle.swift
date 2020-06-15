@@ -30,14 +30,15 @@ public extension Battle {
         if terrain == .cursedGround {
             throw SpellCastingFailure.terrainPreventsMagic
         }
+        fatalError("FIX COMPILATION ERROR BELOW")
         
-        let spell: Spell = Spell[spellName]
-        
-        guard spell.effect.context.isBattle else {
-            throw SpellCastingFailure.cannotCastAdventureMapSpellInBattle
-        }
-  
-        try hero.cast(spell: spellName, target: target)
+//        let spell: Spell = Spell[spellName]
+//
+//        guard spell.effect.context.isBattle else {
+//            throw SpellCastingFailure.cannotCastAdventureMapSpellInBattle
+//        }
+//
+//        try hero.cast(spell: spellName, target: target)
     }
 
     enum Error: Swift.Error {

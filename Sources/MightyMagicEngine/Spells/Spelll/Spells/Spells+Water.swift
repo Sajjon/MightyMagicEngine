@@ -22,14 +22,7 @@ public extension Spell {
             name: .bless,
             schoolOfMagic: .water,
             level: .one,
-            context: .battle(target:
-                .dependingOnSkillLevel(
-                    basic: .allied,
-                    advanced: .allied,
-                    expert: .none
-                )
-            ),
-            duration: .oneRoundPerHeroPower,
+            context: .battle(.massBeneficial),
             generalDescription: "The Bless spell counters the Curse spell. Troop inflicts maximum damage when they attack",
             basicEffectDescription: "Creatures in target allied troop inflict maximum damage when they attack.",
             advancedEffectDescription: "Creatures in target allied troop inflict maximum damage +1 when they attack.",
@@ -44,14 +37,16 @@ public extension Spell {
             name: .cure,
             schoolOfMagic: .water,
             level: .one,
-            context: .battle(target:
-                .dependingOnSkillLevel(
-                    basic: .allied,
-                    advanced: .allied,
-                    expert: .none
+            context: .battle(
+                selection: .target(
+                    .dependingOnSkillLevel(
+                        basic: .allied,
+                        advanced: .allied,
+                        expert: .none
+                    )
                 )
+                duration: .instant
             ),
-            duration: .instant,
             generalDescription: "Removes all negative spell effects from target, allied troop and heals it",
             basicEffectDescription: "Removes all negative spell effects from target, allied troop and heals it for (10 + (power x 5)) health points.",
             advancedEffectDescription: "Removes all negative spell effects from target, allied troop and heals it for (20 + (Power x 5)) health points.",
@@ -67,13 +62,15 @@ public extension Spell {
             schoolOfMagic: .water,
             level: .one,
             context: .battle(
-                target: .dependingOnSkillLevel(
-                    basic: .allied,
-                    advanced: .alliedOrEnemy,
-                    expert: .none
+                selection: .target(
+                    .dependingOnSkillLevel(
+                        basic: .allied,
+                        advanced: .alliedOrEnemy,
+                        expert: .none
+                    )
                 )
+                duration: .instant
             ),
-            duration: .instant,
             generalDescription: "Removes all spells from creatures, including Anti-Magic, but excluding the Disrupting Ray spell. Additionally, Dispel removes effects of Zombie's disease, Scorpicore's paralyze, Ghost Dragon's aging, Basilisk's and Medusa's petrification.",
             basicEffectDescription: "Removes all spell effects from target allied creature troop.",
             advancedEffectDescription: "Removes all spell effects from target allied or enemy creature troop.",
@@ -82,27 +79,20 @@ public extension Spell {
     )
     
     static let protectionFromWater = Self.init(
-           cost: .init(normal: 5, reduced: 4),
-
-           effect: .init(
-               name: .protectionFromWater,
-               schoolOfMagic: .water,
-               level: .one,
-                   context: .battle(target:
-                           .dependingOnSkillLevel(
-                               basic: .allied,
-                               advanced: .allied,
-                               expert: .none
-                           )
-                       ),
-                   duration: .oneRoundPerHeroPower,
-               generalDescription: "Reduces damage from water spells for target allied troop.",
-               basicEffectDescription: "Damage from water magic spells is reduced by 30% for target allied troop.",
-               advancedEffectDescription: "Damage from water magic spells is reduced by 50% for target allied troop.",
-               expertEffectDescription: "Damage from water magic spells is reduced by 50% for all allied troops."
-           )
-       )
-      
+        cost: .init(normal: 5, reduced: 4),
+        
+        effect: .init(
+            name: .protectionFromWater,
+            schoolOfMagic: .water,
+            level: .one,
+            context: .battle(.massBeneficial),
+            generalDescription: "Reduces damage from water spells for target allied troop.",
+            basicEffectDescription: "Damage from water magic spells is reduced by 30% for target allied troop.",
+            advancedEffectDescription: "Damage from water magic spells is reduced by 50% for target allied troop.",
+            expertEffectDescription: "Damage from water magic spells is reduced by 50% for all allied troops."
+        )
+    )
+    
     static let summonBoat = Self.init(
               cost: .init(normal: 8, reduced: 7),
 
@@ -110,8 +100,7 @@ public extension Spell {
                   name: .summonBoat,
                   schoolOfMagic: .water,
                   level: .one,
-                  context: .adventureMap,
-                  duration: .instant,
+                context: .adventureMap(selection: .none, duration: .instant),
                   generalDescription: "Summons a boat",
                   basicEffectDescription: "Summons one of your hero's boats to their current location. If none of those boats are available, then one of your other heroes' boats is summoned. Spell has a 50% chance of working. The spell fails if there are no unoccupied boats available.",
                   advancedEffectDescription: "Same as basic effect, except that if no boats are available, a new one is created. The spell has a 75% chance of working. There are a maximum of sixty-four boats allowed on the Adventure Map at one time. The spell fails if all are occupied.",
@@ -127,8 +116,7 @@ public extension Spell {
             name: .iceBolt,
             schoolOfMagic: .water,
             level: .two,
-            context: .battle(target: .always(.enemy)),
-            duration: .instant,
+            context: .battle(selection: .target(.always(.enemy)), duration: .instant),
             generalDescription: "Shoots an ice bolt at target enemy creature stack.",
             basicEffectDescription: "Target enemy troop receives (10 + (power x 20)) damage.",
             advancedEffectDescription: "Target enemy troop receives (20 + (power x 20)) damage.",
@@ -143,8 +131,7 @@ public extension Spell {
             name: .removeObstacle,
             schoolOfMagic: .water,
             level: .two,
-            context: .battle(target: .always(.battlefieldTile)),
-            duration: .instant,
+            context: .battle(selection: .target(.always(.battlefieldTile)), duration: .instant),
             generalDescription: "Remove obstacle of choice from the battlefield (including those created by magic), except integrated objects such as Castle Walls, Cliffs and Rifts.",
             basicEffectDescription: "Removes one, non-magic obstacle from the battlefield. Integrated obstacles, such as cliffs are not affected.",
             advancedEffectDescription: "Same as basic effect, except fire walls may also be removed.",
@@ -160,8 +147,7 @@ public extension Spell {
              name: .scuttleBoat,
              schoolOfMagic: .water,
              level: .two,
-             context: .adventureMap,
-             duration: .instant,
+             context: .adventureMap(selection: .none, duration: .instant),
              generalDescription: "Destroys unoccupied boats.",
              basicEffectDescription: "Spell has 50% chance of destroying a boat, unless occupied.",
              advancedEffectDescription: "Spell has 75% chance of destroying a boat, unless occupied.",
@@ -177,13 +163,7 @@ public extension Spell {
                name: .weakness,
                schoolOfMagic: .water,
                level: .two,
-               context: .battle(
-                target: .dependingOnSkillLevel(
-                    basic: .enemy,
-                    advanced: .enemy,
-                    expert: .none)
-            ),
-               duration: .oneRoundPerHeroPower,
+            context: .battle(.massNegative),
                generalDescription: "Reduces the attack of target enemy stack.",
                basicEffectDescription: "Target enemy troop's attack rating is reduced by 3.",
                advancedEffectDescription: "Target enemy troop's attack rating is reduced by 6.",
@@ -199,14 +179,7 @@ public extension Spell {
             name: .forgetfulness,
             schoolOfMagic: .water,
             level: .three,
-            context: .battle(
-                target: .dependingOnSkillLevel(
-                    basic: .enemy,
-                    advanced: .enemy,
-                    expert: .none
-                )
-            ),
-            duration: .oneRoundPerHeroPower,
+           context: .battle(.massNegative),
             generalDescription: "Reduced damaged inflicted by ranged enemy creatures",
             basicEffectDescription: "Half of the creatures in target, enemy troop, with ranged attack forget to shoot. Melee damage is reduced by 50%.",
             advancedEffectDescription: "Target, enemy troop with ranged attack cannot use its ranged attack. Melee damage is reduced by 50%",
@@ -221,8 +194,7 @@ public extension Spell {
             name: .frostRing,
             schoolOfMagic: .water,
             level: .three,
-            context: .battle(target: .always(.multiTileHittingEnemies)),
-            duration: .instant,
+            context: .battle(selection: .target(.always(.multiTileHittingEnemies)), duration: .instant),
             generalDescription: "Causes creatures in the hexes surrounding target hex receive damage.",
             basicEffectDescription: "Troops in hexes surrounding target hex receive (15 + (power x 10)) in damage. Target hex is unaffected.",
             advancedEffectDescription: "Troops in hexes surrounding target hex receive (30 + (power x 10)) in damage. Target hex is unaffected.",
@@ -237,8 +209,7 @@ public extension Spell {
             name: .mirth,
             schoolOfMagic: .water,
             level: .three,
-            context: .battle(target: .dependingOnSkillLevel(basic: .allied, advanced: .allied, expert: .none)),
-            duration: .oneRoundPerHeroPower,
+            context: .battle(.massBeneficial),
             generalDescription: "Increases morale of target allied stack.",
             basicEffectDescription: "Morale of target allied troop is increased by 1.",
             advancedEffectDescription: "Morale of target allied troop is increased by 2.",
@@ -253,8 +224,7 @@ public extension Spell {
             name: .teleport,
             schoolOfMagic: .water,
             level: .three,
-            context: .battle(target: .always(.allied)),
-            duration: .instant,
+            context: .battle(selection: .sourceAndTarget(source: .allied, target: .battlefieldTile), duration: .instant)
             generalDescription: "Move target allied troop to another unoccupied tile on the battlefield.",
             basicEffectDescription: "Target allied troop instantly moves to an unoccupied target hex. Troop cannot teleport over walls or moats.",
             advancedEffectDescription: "Same as Basic Effect, except troop can teleport over walls.",

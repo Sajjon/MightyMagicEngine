@@ -197,9 +197,9 @@ public extension Spell {
     /// Causes damage to all undead creatures on the battlefield - including the caster's troops.
     ///
     /// # Immunity
-    /// All non-undead creatures are naturally immune to the spell. Additionally, artifact
-    /// `Pendant of Death` can make undead troops immune to the spell. If all the creatures
-    /// on the battlefield are immune to the `Destroy Undead` spell, it can not be cast.
+    /// All non-undead creatures are naturally immune to the spell.
+    /// Additionally, artifact  `Pendant of Death` can make undead troops immune to the spell.
+    /// If all the creatures on the battlefield are immune to the `Destroy Undead` spell, it can not be cast.
     ///
     /// # More info
     /// See more info at [Heroes 3 wiki]
