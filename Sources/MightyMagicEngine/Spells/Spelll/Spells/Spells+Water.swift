@@ -44,7 +44,7 @@ public extension Spell {
                         advanced: .allied,
                         expert: .none
                     )
-                )
+                ),
                 duration: .instant
             ),
             generalDescription: "Removes all negative spell effects from target, allied troop and heals it",
@@ -68,7 +68,7 @@ public extension Spell {
                         advanced: .alliedOrEnemy,
                         expert: .none
                     )
-                )
+                ),
                 duration: .instant
             ),
             generalDescription: "Removes all spells from creatures, including Anti-Magic, but excluding the Disrupting Ray spell. Additionally, Dispel removes effects of Zombie's disease, Scorpicore's paralyze, Ghost Dragon's aging, Basilisk's and Medusa's petrification.",
@@ -224,7 +224,7 @@ public extension Spell {
             name: .teleport,
             schoolOfMagic: .water,
             level: .three,
-            context: .battle(selection: .sourceAndTarget(source: .allied, target: .battlefieldTile), duration: .instant)
+            context: .battle(selection: .sourceAndTarget(source: .allied, target: .battlefieldTile), duration: .instant),
             generalDescription: "Move target allied troop to another unoccupied tile on the battlefield.",
             basicEffectDescription: "Target allied troop instantly moves to an unoccupied target hex. Troop cannot teleport over walls or moats.",
             advancedEffectDescription: "Same as Basic Effect, except troop can teleport over walls.",
@@ -235,70 +235,133 @@ public extension Spell {
 
     
     // MARK: Level 4
+    
+    /// Creates an exact replica of the target creature stack, which has all of the original stack's features and special abilities.
+    ///
+    /// For example, cloning Pit Lords will create a Pit Lord that can summon Demons. Although only one clone of a
+    /// single unit stack can exist at a time, it is possible to clone a unit stack multiple times if its clone is dispelled.
+    /// The clone will disappear immediately (no retaliation) when it receives any damage. It will also be dispelled
+    /// if the unit that the Clone-spell was casted on dies. Unlike other spells that summon a new creature, Clone's
+    /// duration depends on the caster's spell power, as the clone lasts for 1 turn for each level of the caster's
+    /// spell power.
+    ///
+    /// # Specialization
+    /// Heroes specializing in Clone
+    /// - Eovacius the Navigator (HotA)
+    ///
+    /// # Immunity
+    /// Units immune to its effects:
+    /// - Gold Dragon
+    /// - Black Dragon
+    /// - Magic Elemental
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Clone
+    ///
     static let clone = Self.init(
-        cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
+        cost: .init(normal: 24, reduced: 20),
 
         effect: .init(
             name: .clone,
             schoolOfMagic: .water,
             level: .four,
-            context: <#T##Context#>,
-            duration: <#T##Duration#>,
-            generalDescription: <#T##String#>,
-            basicEffectDescription: <#T##String#>,
-            advancedEffectDescription: <#T##String#>,
-            expertEffectDescription: <#T##String#>
+            context: .battle(selection: .target(.always(.allied)), duration: .oneRoundPerHeroPower),
+            generalDescription: "creates an exact replica of the target creature stack, which has all of the original stack's features and special abilities.",
+            basicEffectDescription: "Creates a duplicate of target, allied troop level 1-5. The duplicate can attack but is dispelled if it receives any damage.",
+            advancedEffectDescription: "Same as Basic Effect, except the duplicate may be of a level 1-6 troop.",
+            expertEffectDescription: "Same as Basic Effect, except the duplicate may be of a level 1-7 troop."
         )
     )
     
+    /// Increases the Speed, Attack and Defense stats of a target, allied stack
+    ///
+    /// # Specialization
+    /// Heroes specializing in Clone
+    /// - Loynis the Cleric
+    ///
+    /// # Immunity
+    /// Units immune to its effects:
+    /// - Gold Dragon
+    /// - Black Dragon
+    /// - Magic Elemental
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Prayer
+    ///
     static let prayer = Self.init(
-        cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
+        cost: .init(normal: 16, reduced: 12),
 
         effect: .init(
             name: .prayer,
             schoolOfMagic: .water,
             level: .four,
-            context: <#T##Context#>,
-            duration: <#T##Duration#>,
-            generalDescription: <#T##String#>,
-            basicEffectDescription: <#T##String#>,
-            advancedEffectDescription: <#T##String#>,
-            expertEffectDescription: <#T##String#>
+            context: .battle(.massBeneficial),
+            generalDescription: "Increases the Speed, Attack and Defense stats of a target, allied stack",
+            basicEffectDescription: "Target, allied troop's attack, defense, and speed (hexes per turn) ratings are increased by 2.",
+            advancedEffectDescription: "Target, allied troop's attack, defense, and speed (hexes per turn) ratings are increased by 4.",
+            expertEffectDescription: "All allied troop's attack, defense, and speed ratings are increased by 4."
+        )
+    )
+}
+
+public extension Spell {
+    
+    /// Enables hero to move over water as if it were land, provided that she ends her turn on land.
+    ///
+    /// Movement cost is increased when moving over water.
+    ///
+    /// # Related artifact
+    /// [Boots of Leviatation](x-source-tag://Artifact.bootsOfLeviatation)
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Water_Walk
+    ///
+    /// - Tag: Spell.waterWalk
+    ///
+    static let waterWalk = Self.init(
+        cost: .init(normal: 12, reduced: 8),
+        
+        effect: .init(
+            name: .waterWalk,
+            schoolOfMagic: .water,
+            level: .four,
+            context: .adventureMap(selection: .none, duration: .oneDay),
+            generalDescription: "Enables hero to move over water as if it were land, provided that he ends his turn on land.",
+            basicEffectDescription: "The casting hero may follow a movement path across water, provided the end destination is an unoccupied location on land. Water movement may be up to 60% of the hero's normal movement.",
+            advancedEffectDescription: "Same as basic effect, except that water movement may be up to 80% of the hero's normal movement.",
+            expertEffectDescription: "Same as basic effect, except that water movement may be made at the hero's full, normal movement."
         )
     )
     
-    static let waterWalk = Self.init(
-           cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
-
-           effect: .init(
-               name: .waterWalk,
-               schoolOfMagic: .water,
-               level: .four,
-               context: <#T##Context#>,
-               duration: <#T##Duration#>,
-               generalDescription: <#T##String#>,
-               basicEffectDescription: <#T##String#>,
-               advancedEffectDescription: <#T##String#>,
-               expertEffectDescription: <#T##String#>
-           )
-       )
-
     
     // MARK: Level 5
+    
+    /// Summons water Elementals to fight for you in your army until end of battle.
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Summon_Water_Elemental
+    ///
     static let summonWaterElemental = Self.init(
-            cost: .init(normal: <#T##Cost.Value#>, reduced: <#T##Cost.Value#>),
-
-            effect: .init(
-                name: .summonWaterElemental,
-                schoolOfMagic: .water,
-                level: .five,
-                context: <#T##Context#>,
-                duration: <#T##Duration#>,
-                generalDescription: <#T##String#>,
-                basicEffectDescription: <#T##String#>,
-                advancedEffectDescription: <#T##String#>,
-                expertEffectDescription: <#T##String#>
-            )
+        cost: .init(normal: 25, reduced: 20),
+        
+        effect: .init(
+            name: .summonWaterElemental,
+            schoolOfMagic: .water,
+            level: .five,
+            context: .battle(selection: .target(.always(.none)), duration: .untilEndOfBattle),
+            generalDescription: "Summons water Elementals to fight for you in your army until end of battle.",
+            basicEffectDescription: "A troop containing (power x 2) water elementals appears on the side of the casting player. Only one type of elemental can be summoned.",
+            advancedEffectDescription: "Same as basic effect, except that (power x 3) water elementals are summoned.",
+            expertEffectDescription: "Same as basic effect, except that (power x 4) water elementals are summoned."
         )
-
+    )
+    
 }

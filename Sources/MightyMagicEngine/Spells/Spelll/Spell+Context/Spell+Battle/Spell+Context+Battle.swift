@@ -94,12 +94,12 @@ public extension Spell.Context.Battle.Duration {
 
 // MARK: Battle Selection
 public extension Spell.Context.Battle {
-    enum Selection: Equatable {
+    enum Selection {
         case target(Target)
         
         case sourceAndTarget(
             source: Target.Option,
-            target: Target
+            target: Target.Option
         )
     }
 }
@@ -126,17 +126,36 @@ public extension Spell.Context.Battle.Selection {
 
 // MARK: - Target
 public extension Spell.Context.Battle.Selection {
-    enum Target: Equatable {
+    enum Target {
         
         /// `Magic Missile` is *always just* cast on enemy creature stack.
         case always(Option)
         
         /// `Dispel`, `Haste`, `Slow`
-        case dependingOnSkillLevel(
+        case skillLevelDependent(
+            SkillLevelDependent
+        )
+        
+        public struct SkillLevelDependent {
+            public let basic: Option
+            public let advanced: Option
+            public let expert: Option
+        }
+        
+        public static func dependingOnSkillLevel(
             basic: Option,
             advanced: Option,
             expert: Option
-        )
+        ) -> Self {
+            return Target.skillLevelDependent(.init(basic: basic, advanced: advanced, expert: expert))
+        }
+    }
+}
+
+public extension Spell.Context.Battle.Selection.Target.SkillLevelDependent {
+    
+    func requiresTarget(levels: MagicSchoolSkillLevels) -> Bool {
+        implementMe
     }
 }
 
@@ -152,17 +171,17 @@ public extension Spell.Context.Battle.Selection.Target {
 
 public extension Spell.Context.Battle.Selection.Target.Option {
     
-    /// Land Mine, Summon X Elementas, Mass Slow, Mass Haste, Mass Prayer etc...
-    static let none             = Self(rawValue: 1 << 0)
-    
     /// Haste (but not "Mass Haste"), Resurrection, Sacrifice etc
-    static let allied           = Self(rawValue: 1 << 1)
+    static let allied           = Self(rawValue: 1 << 0)
     
     /// Magic Arrow, Slow (but not "Mass slow"), Armageddon etc
-    static let enemy            = Self(rawValue: 1 << 2)
+    static let enemy            = Self(rawValue: 1 << 1)
     
     /// Remove obstacle, Force Field (2/3 hexes)
-    static let battlefieldTile  = Self(rawValue: 1 << 3)
+    static let battlefieldTile  = Self(rawValue: 1 << 2)
+    
+    /// Land Mine, Summon X Elementas, Mass Slow, Mass Haste, Mass Prayer etc...
+    static let none: Self = []
     
     /// `Advanced` Dispel, Frenzy
     static let alliedOrEnemy:   Self = [.allied, .enemy]
@@ -175,4 +194,17 @@ public extension Spell.Context.Battle.Selection.Target.Option {
     static let multiTileHittingEnemies:   Self = [.enemy, .battlefieldTile]
 }
 
+public extension Spell.Context.Battle.Selection.Target.Option {
+    var requiresTarget: Bool {
+        self != .none
+    }
+    
+}
 
+public extension Spell.Context.Battle.Selection.Target {
+    static let none = Self.always(.none)
+    static let allied = Self.always(.allied)
+    static let enemy = Self.always(.enemy)
+    static let battlefieldTile = Self.always(.battlefieldTile)
+    static let alliedOrEnemy = Self.always(.alliedOrEnemy)
+}

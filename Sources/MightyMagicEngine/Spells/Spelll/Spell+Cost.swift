@@ -18,7 +18,7 @@ public extension Spell {
         /// This reduced cost it the same for all tought heroes, independeny on their level of
         /// techings: `basic`, `advanced` or `expert` - which only affects the effect of the
         /// cast spell, not the cost.
-        public let reduced: Value
+        public let reduced: Reduced
     }
 }
 
@@ -33,8 +33,8 @@ public extension Spell.Cost {
 }
 
 public extension Spell.Cost.Reduced {
-    typealias IntegerLiteralType = Value
-    public init(integerLiteral value: IntegerLiteralType) {
+    typealias IntegerLiteralType = Spell.Cost.Value
+    init(integerLiteral value: IntegerLiteralType) {
         self = .sameForAllLevels(value)
     }
 }

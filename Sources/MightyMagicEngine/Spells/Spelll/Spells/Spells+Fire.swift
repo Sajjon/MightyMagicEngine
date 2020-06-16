@@ -21,7 +21,7 @@ public extension Spell {
             name: .landMine,
             schoolOfMagic: .fire,
             level: .three,
-            context: .battle(selection: .target(.always(.none)), duration: .untilTouched)
+            context: .battle(selection: .target(.always(.none)), duration: .untilTouched),
             generalDescription: "Produces a number of land mines at random locations. All friendly troops can cross the mines safely. All enemy troops, except those immune, will take damage from the mines, but this spell cannot be cast if the enemy started the battle with at least one unit fighting on its Native Terrain which is not immune to the effects of the spell.",
             basicEffectDescription: "Landmines are placed in four random hexes on the battlefield. A troop stepping on a mine takes ((Power x 10) + 25) damage. Enemy creatures battling on their native terrain can see the mines and can cross them safely. To all others they are invisible.",
             advancedEffectDescription: "Same as basic effect, except that six mines are placed, and damage is ((Power x 10) + 50).",

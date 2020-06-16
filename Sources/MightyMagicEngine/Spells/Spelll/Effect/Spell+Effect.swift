@@ -23,9 +23,6 @@ public extension Spell {
         /// Battle or adventure map spell
         public let context: Context
         
-        /// Duration of the spell
-        public let duration: Duration
-        
         /// General description
         public let generalDescription: String
         

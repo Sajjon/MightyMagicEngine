@@ -46,7 +46,7 @@ public extension Spell {
             name: .shield,
             schoolOfMagic: .earth,
             level: .one,
-            context: .battle(.massBeneficial)
+            context: .battle(.massBeneficial),
             generalDescription: "Reduces melee damage done to target allied stack or all allied stacks.",
             basicEffectDescription: "Hand-to-hand damage delivered to target, allied troop is reduced by 15%.",
             advancedEffectDescription: "Hand-to-hand damage delivered to target, allied troop is reduced by 30%.",

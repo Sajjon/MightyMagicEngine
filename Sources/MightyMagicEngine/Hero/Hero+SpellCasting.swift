@@ -76,8 +76,9 @@ public extension Hero {
         }
         let spell = Spell[spellName]
         let skillLevel = skillLevelMatchingMagicSchool(ofSpell: spell)
-        let cost = skillLevel != nil ? spell.cost.reduced : spell.cost.normal
-        return cost
+//        let cost = skillLevel != nil ? spell.cost.reduced : spell.cost.normal
+        implementMe
+//        return cost
     }
     
     func cast(spell spellName: Spell.Name, target: CreatureStack? = nil) throws {
@@ -87,7 +88,7 @@ public extension Hero {
         }
         let spell = Spell[spellName]
 
-        if spell.effect.context.requiresTarget, target == nil {
+        if spell.effect.context.requiresTarget(levels: self.magicSchoolSkillLevel), target == nil {
             throw SpellCastingFailure.combatSpellRequiresTargetButNoneWasGiven
         }
             

@@ -40,7 +40,7 @@ public extension Spell {
             name: .viewAir,
             schoolOfMagic: .air,
             level: .one,
-            context: .adventureMap(selection: .none, duration: .instant)
+            context: .adventureMap(selection: .none, duration: .instant),
             generalDescription: "Displays noteworthy locations on the view world screen",
             basicEffectDescription: "Displays the location of all artifacts on the view world screen",
             advancedEffectDescription: "Displays the location of all artifacts and heroes on the view world screen.",
@@ -102,6 +102,14 @@ public extension Spell {
     )
     
     /// Casts a bolt on lightning on target enemy creature.
+    ///
+    /// # More info
+    /// See more info at [Heroes 3 wiki]
+    ///
+    /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Lightning_Bolt
+    ///
+    /// - Tag: Spell.lightningBolt
+    ///
     static let lightningBolt = Self.init(
         cost: .init(normal: 10, reduced: 8),
 
@@ -198,7 +206,7 @@ public extension Spell {
     ///
     /// # Immunity
     /// All non-undead creatures are naturally immune to the spell.
-    /// Additionally, artifact  `Pendant of Death` can make undead troops immune to the spell.
+    /// Additionally, artifact  [Pendant of Death](x-source-tag://Artifact.pendantOfDeath) can make undead troops immune to the spell.
     /// If all the creatures on the battlefield are immune to the `Destroy Undead` spell, it can not be cast.
     ///
     /// # More info
@@ -206,6 +214,7 @@ public extension Spell {
     ///
     /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Destroy_Undead
     ///
+    /// - Tag: Spell.destroyUndead
     static let destroyUndead = Self.init(
         cost: .init(normal: 15, reduced: 12),
 
@@ -236,8 +245,8 @@ public extension Spell {
     /// - All units immune to mind spells.
     ///
     /// Artifacts that render units immune to Hypnotize:
-    /// - `Pendant of Free Will`
-    /// - `Badge of Courage Badge of Courage` (not in HotA)
+    /// - [Pendant of Free Will](x-source-tag://Artifact.pendantOfFreeWill)
+    /// - [Badge of Courage](x-source-tag://Artifact.badgeOfCourage) (not in HotA)
     ///
     /// # Casting Units
     /// Units capable of casting this spell:
@@ -247,6 +256,8 @@ public extension Spell {
     /// See more info at [Heroes 3 wiki]
     ///
     /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Hypnotize
+    ///
+    /// - Tag: Spell.hypnotize
     ///
     static let hypnotize = Self.init(
         cost: .init(normal: 18, reduced: 15),
@@ -291,7 +302,7 @@ public extension Spell {
     /// - Magic Elemental
     ///
     /// Artifacts that render units immune to Chain Lightning:
-    /// - `Pendant of Negativity`
+    /// - [Pendant of Negativity](x-source-tag://Artifact.pendantOfNegativity)
     ///
     /// # Vulnerability
     /// Units vulnerable to its effects:
@@ -301,6 +312,8 @@ public extension Spell {
     /// See more info at [Heroes 3 wiki]
     ///
     /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Chain_Lightning
+    ///
+    /// - Tag: Spell.chainLightning
     ///
     static let chainLightning = Self.init(
         cost: .init(normal: 24, reduced: 20),
@@ -333,6 +346,8 @@ public extension Spell {
     /// See more info at [Heroes 3 wiki]
     ///
     /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Counterstrike
+    ///
+    /// - Tag: Spell.counterstrike
     ///
     static let counterstrike = Self.init(
         cost: .init(normal: 24, reduced: 20),
@@ -438,12 +453,14 @@ public extension Spell {
     ///     |-------------------------------------------------------------------------------|
     ///
     /// # Related Artifacts
-    /// - Angel Wings - gives expert Fly while equipped
+    /// - [Angel Wings](x-source-tag://Artifact.angelWings) - gives expert Fly while equipped
     ///
     /// # More info
     /// See more info at [Heroes 3 wiki]
     ///
     /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Fly
+    ///
+    /// - Tag: Spell.fly
     ///
     static let fly = Self.init(
         cost: .init(normal: 20, reduced: 15),
@@ -497,7 +514,7 @@ public extension Spell {
             name: .summonAirElementals,
             schoolOfMagic: .air,
             level: .five,
-            context: .battle(selection: .target(.none), duration: .untilEndOfBattle),
+            context: .battle(selection: .target(.always(.none)), duration: .untilEndOfBattle),
             generalDescription: "It summons a stack of Air Elementals on the first row of combat field; on casting hero's side",
             basicEffectDescription: "Summons a troop of air elementals containing creatures amount of (power x 2).",
             advancedEffectDescription: "Summons a troop of air elementals containing creatures amount of (power x 3).",
@@ -531,6 +548,8 @@ public extension Spell {
     /// See more info at [Heroes 3 wiki]
     ///
     /// [Heroes 3 wiki]: https://heroes.thelazy.net/index.php/Titan%27s_Lightning_Bolt
+    ///
+    /// - Tag: Spell.titansLightningBolt
     ///
     static let titansLightningBolt = Self.init(
         cost: .init(normal: 0, reduced: 0),

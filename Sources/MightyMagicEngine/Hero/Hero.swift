@@ -27,4 +27,15 @@ public extension Hero {
     typealias Mana = UInt
     
     static let manaPerKnowledge = UInt(10)
+    
+    var magicSchoolSkillLevel: MagicSchoolSkillLevels {
+        implementMe
+    }
+}
+
+public struct MagicSchoolSkillLevels {
+    public let airLevel: SecondarySkill.Level?
+    public let earthLevel: SecondarySkill.Level?
+    public let fireLevel: SecondarySkill.Level?
+    public let waterLevel: SecondarySkill.Level?
 }

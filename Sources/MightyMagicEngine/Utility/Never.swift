@@ -12,6 +12,10 @@ internal func warningDummyLogic<DummyValue>(_ dummy: DummyValue, _ function: Str
     return dummy
 }
 
+var implementMe: Never {
+    fatalError("Implement me!")
+}
+
 internal func incorrectImplementation(message: String? = nil) -> Never {
     let extraMessage = message.map { ", \($0)" } ?? ""
     fatalError("Incorrect implementation\(extraMessage)")

@@ -30,3 +30,41 @@ public extension Spell.Context {
         .adventureMap(.init(selection: selection, duration: duration))
     }
 }
+
+
+
+public extension Spell {
+    func requiresTarget(levels: MagicSchoolSkillLevels) -> Bool {
+        effect.context.requiresTarget(levels: levels)
+    }
+}
+
+public extension Spell.Context {
+    func requiresTarget(levels: MagicSchoolSkillLevels) -> Bool {
+        switch self {
+        case .battle(let battle): return battle.requiresTarget(levels: levels)
+        case .adventureMap(let adventureMap): return adventureMap.requiresTarget(levels: levels)
+        }
+    }
+}
+
+public extension Spell.Context.Battle {
+    func requiresTarget(levels: MagicSchoolSkillLevels) -> Bool {
+        switch selection {
+        case .sourceAndTarget: return true
+        case .target(let target):
+            switch target {
+            case .always(let targetOption):
+                return targetOption.requiresTarget
+            case .skillLevelDependent(let levelDependent):
+                return levelDependent.requiresTarget(levels: levels)
+            }
+        }
+    }
+}
+
+public extension Spell.Context.AdventureMap {
+    func requiresTarget(levels: MagicSchoolSkillLevels) -> Bool {
+        implementMe
+    }
+}
