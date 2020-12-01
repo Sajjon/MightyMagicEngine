@@ -27,8 +27,23 @@ public extension Spell.Cost {
     typealias Value = Hero.Mana
     
     enum Reduced: ExpressibleByIntegerLiteral {
-       case sameForAllLevels(Value)
-        case dependingOnLevel(basic: Value, advanced: Value, expert: Value)
+        case sameForAllLevels(Value)
+        
+        case skillLevelDependent(SkillLevelDependent)
+        
+        public struct SkillLevelDependent {
+            public let basicSpellCost: Value
+            public let advancedSpellCost: Value
+            public let expertSpellCost: Value
+        }
+        
+        static func dependingOnLevel(basic: Value, advanced: Value, expert: Value) -> Self {
+            .skillLevelDependent(SkillLevelDependent.init(
+                basicSpellCost: basic,
+                advancedSpellCost: advanced,
+                expertSpellCost: expert)
+            )
+        }
     }
 }
 
@@ -36,5 +51,11 @@ public extension Spell.Cost.Reduced {
     typealias IntegerLiteralType = Spell.Cost.Value
     init(integerLiteral value: IntegerLiteralType) {
         self = .sameForAllLevels(value)
+    }
+}
+
+public extension Spell.Cost.Reduced.SkillLevelDependent {
+    func costGivenMagicSchoolSkillLevel(_ level: SecondarySkill.Level) -> Spell.Cost.Value {
+        implementMe
     }
 }

@@ -29,11 +29,23 @@ public extension Spell.Context {
     ) -> Self {
         .adventureMap(.init(selection: selection, duration: duration))
     }
+    
+    var isBattle: Bool {
+        switch self {
+        case .battle: return true
+        case .adventureMap: return false
+        }
+    }
 }
 
 
 
 public extension Spell {
+    
+    var isBattleSpell: Bool {
+        effect.context.isBattle
+    }
+    
     func requiresTarget(levels: MagicSchoolSkillLevels) -> Bool {
         effect.context.requiresTarget(levels: levels)
     }

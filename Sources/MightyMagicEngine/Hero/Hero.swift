@@ -7,7 +7,7 @@ public final class Hero: Codable {
     public private(set) var knowledge: Knowledge
     public private(set) var spellBook: SpellBook?
     public internal(set) var mana: Mana
-    public private(set) var secondarySkills: [SecondarySkill] = []
+    public private(set) var secondarySkills: [SecondarySkill.Name: SecondarySkill] = [:]
     
     public init(
         name: String,
@@ -29,7 +29,12 @@ public extension Hero {
     static let manaPerKnowledge = UInt(10)
     
     var magicSchoolSkillLevel: MagicSchoolSkillLevels {
-        implementMe
+        return MagicSchoolSkillLevels(
+            airLevel: secondarySkills[.airMagic]?.level,
+            earthLevel: secondarySkills[.earthMagic]?.level,
+            fireLevel: secondarySkills[.fireMagic]?.level,
+            waterLevel: secondarySkills[.waterMagic]?.level
+        )
     }
 }
 
@@ -38,4 +43,25 @@ public struct MagicSchoolSkillLevels {
     public let earthLevel: SecondarySkill.Level?
     public let fireLevel: SecondarySkill.Level?
     public let waterLevel: SecondarySkill.Level?
+}
+
+public extension MagicSchoolSkillLevels {
+    var maxLevelIgnoringSchool: SecondarySkill.Level? {
+        var max: SecondarySkill.Level?
+        func setMaxIfHigher(_ keyPath: KeyPath<Self, SecondarySkill.Level?>) {
+            func maxIfHigher(_ keyPath: KeyPath<Self, SecondarySkill.Level?>) -> SecondarySkill.Level? {
+                let level = self[keyPath: keyPath]
+                guard let maxSoFar = max else {
+                    return level
+                }
+                return max(maxSoFar, level)
+            }
+            max = maxIfHigher(keyPath)
+        }
+        setMaxIfHigher(\.airLevel)
+        setMaxIfHigher(\.earthLevel)
+        setMaxIfHigher(\.fireLevel)
+        setMaxIfHigher(\.waterLevel)
+        return max
+    }
 }

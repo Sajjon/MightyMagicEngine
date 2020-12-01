@@ -51,20 +51,20 @@ public extension Hero {
             }
         }
 
-        let levelsOfSchools: [SecondarySkill.Level] = secondarySkills.filter { $0.name.isMagicSchoolSkill }
-            .compactMap { skill in
-                let magicSchool = mapMagicSkillToSpellMagicSchool(skillNamed: skill.name)
+        let levelsOfSchools: [SecondarySkill.Level] = secondarySkills.filter { $0.key.isMagicSchoolSkill }
+            .compactMap {
+                let magicSchool = mapMagicSkillToSpellMagicSchool(skillNamed: $0.key)
                 guard spell.schoolOfMagic.contains(magicSchool) else {
                     return nil
                 }
-                return skill.level
+                return $0.value.level
             }
         
         return levelsOfSchools.sorted().max()
     }
     
     func skilled(in skillName: SecondarySkill.Name) -> Bool {
-        secondarySkills.map { $0.name }.contains(skillName)
+        secondarySkills[skillName] != nil
     }
     
     func costOfCasting(spell spellName: Spell.Name) throws -> Spell.Cost.Value {
@@ -75,10 +75,8 @@ public extension Hero {
             throw SpellCastingFailure.notInSpellBook
         }
         let spell = Spell[spellName]
-        let skillLevel = skillLevelMatchingMagicSchool(ofSpell: spell)
-//        let cost = skillLevel != nil ? spell.cost.reduced : spell.cost.normal
-        implementMe
-//        return cost
+        let cost = spell.costGivenSkills(magicSkill: self.magicSchoolSkillLevel)
+        return cost
     }
     
     func cast(spell spellName: Spell.Name, target: CreatureStack? = nil) throws {

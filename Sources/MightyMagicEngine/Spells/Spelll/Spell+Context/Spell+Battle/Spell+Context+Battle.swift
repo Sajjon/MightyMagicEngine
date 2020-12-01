@@ -132,9 +132,7 @@ public extension Spell.Context.Battle.Selection {
         case always(Option)
         
         /// `Dispel`, `Haste`, `Slow`
-        case skillLevelDependent(
-            SkillLevelDependent
-        )
+        case skillLevelDependent(SkillLevelDependent)
         
         public struct SkillLevelDependent {
             public let basic: Option
@@ -147,7 +145,7 @@ public extension Spell.Context.Battle.Selection {
             advanced: Option,
             expert: Option
         ) -> Self {
-            return Target.skillLevelDependent(.init(basic: basic, advanced: advanced, expert: expert))
+            .skillLevelDependent(.init(basic: basic, advanced: advanced, expert: expert))
         }
     }
 }
